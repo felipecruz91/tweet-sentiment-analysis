@@ -27,11 +27,20 @@ You will need the following tools to complete the hands-on lab.
 
 2. Create an Azure Cosmos DB Account under the `rg-azure-bootcamp` resource group that you have created in the previous step.
 
-    ![architecture-diagram](./docs/images/create-azure-cosmosdb-account.PNG)
+    ![create-azure-cosmosdb-account](./docs/images/create-azure-cosmosdb-account.PNG)
 
         Resource Group  rg-azure-bootcamp
         Location        West Europe
         Account Name    (new) felipecruz-cosmosdb
         API             Core (SQL)
         Geo-Redundancy  Disable
-        Multi-region Writes Disable    
+        Multi-region Writes Disable
+
+3. Create both a new database and a new collection under the Cosmos DB account you created in the previous step.
+
+    ![create-cosmos-collection-step](./docs/images/create-cosmos-collection-step.PNG)
+
+        Database Id     TweetAnalysis
+        Collection Id   TweetSentiment
+        Partition Key   /partitionKey
+        Throughput      400

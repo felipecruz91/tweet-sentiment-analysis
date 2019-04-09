@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Threading.Tasks;
+using Microsoft.Azure.Documents.Client;
 using Tweetinvi.Events;
 using TweetSentimentAnalysis.Domain.Models.SentimentAnalysis;
 
@@ -6,21 +8,41 @@ namespace TweetSentimentAnalysis.DataAcessLayer
 {
     public class TweetsRepository : ITweetsRepository
     {
-        public void SaveTweet(MatchedTweetReceivedEventArgs args, TweetSentiment tweetSentiment)
+        private const string DatabaseId = "TweetAnalysis";
+        private const string CollectionId = "TweetSentiment";
+        private readonly DocumentClient _documentClient;
+        private readonly Uri _documentCollectionUri;
+
+        public TweetsRepository(DocumentClient documentClient)
         {
-            var fields = new Dictionary<string, object>
+            _documentClient = documentClient;
+            _documentCollectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
+        }
+
+        public async Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, TweetSentiment tweetSentiment)
+        {
+            var document = new TweetSentimentDocument
             {
-                {"fullText", args.Tweet.FullText},
-                {"screen_name", args.Tweet.CreatedBy.UserIdentifier.ScreenName},
-                {"isRetweet", args.Tweet.IsRetweet},
-                {"retweetCount", args.Tweet.RetweetCount},
-                {"favorited", args.Tweet.Favorited},
-                {"favoriteCount", args.Tweet.FavoriteCount},
-                {"created_at", args.Tweet.CreatedAt},
-                {"score", tweetSentiment.Score}
+                Id = args.Tweet.FullText.GetHashCode().ToString(), //TODO
+                PartitionKey = args.Tweet.CreatedBy.UserIdentifier.ScreenName,
+                FullText = args.Tweet.FullText,
+                CreatedAt = args.Tweet.CreatedAt,
+                Score = tweetSentiment.Score
             };
 
-            //TODO: Save document in Cosmos DB
+            try
+            {
+                var x = await _documentClient.CreateDocumentAsync(_documentCollectionUri,
+                    document);
+
+                var response = x;
+            }
+            catch (Exception e)
+            {
+                //TODO: Handle possible HTTP Status Code 429 Too Many Requests and Timeouts!
+                Console.WriteLine(e);
+                Console.ReadKey();
+            }
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using Microsoft.Azure.Documents.Client;
 using Microsoft.Extensions.Configuration;
 using Tweetinvi.Models;
 using TweetSentimentAnalysis.BusinessLogic;
@@ -27,7 +28,11 @@ namespace TweetSentimentAnalysis.Processor
 
             try
             {
-                var repository = new TweetsRepository();
+
+                var documentClient = new DocumentClient(new Uri(_configuration["CosmosDB:EndpointUrl"]),
+                    _configuration["CosmosDB:AuthorizationKey"]);
+
+                var repository = new TweetsRepository(documentClient);
 
                 // Start the Twitter Stream
                 var credentials = GetTwitterCredentials();
