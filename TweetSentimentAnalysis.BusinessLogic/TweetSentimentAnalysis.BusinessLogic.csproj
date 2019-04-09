@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="TweetinviAPI" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TweetSentimentAnalysis.DataAcessLayer\TweetSentimentAnalysis.DataAcessLayer.csproj" />
+    <ProjectReference Include="..\TweetSentimentAnalysis.Domain\TweetSentimentAnalysis.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
