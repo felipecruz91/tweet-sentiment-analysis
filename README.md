@@ -10,3 +10,28 @@
 ## Architecture diagram
 
 ![architecture-diagram](./docs/images/architecture-diagram.PNG)
+
+## Requirements
+
+You will need the following tools to complete the hands-on lab.
+
+- Visual Studio 2017
+- Docker
+- Azure account
+
+## Steps
+
+1. Create a resource group with name `rg-azure-bootcamp`
+
+    ![architecture-diagram](./docs/images/create-resource-group-step.PNG)
+
+2. Create an Azure Cosmos DB Account under the `rg-azure-bootcamp` resource group that you have created in the previous step.
+
+    ![architecture-diagram](./docs/images/create-azure-cosmosdb-account.PNG)
+
+        Resource Group  rg-azure-bootcamp
+        Location        West Europe
+        Account Name    (new) felipecruz-cosmosdb
+        API             Core (SQL)
+        Geo-Redundancy  Disable
+        Multi-region Writes Disable    
