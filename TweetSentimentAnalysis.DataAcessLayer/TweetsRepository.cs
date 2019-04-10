@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Net;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Tweetinvi.Events;
 using TweetSentimentAnalysis.Domain.Models.SentimentAnalysis;
@@ -23,7 +26,6 @@ namespace TweetSentimentAnalysis.DataAcessLayer
         {
             var document = new TweetSentimentDocument
             {
-                Id = args.Tweet.FullText.GetHashCode().ToString(), //TODO
                 PartitionKey = args.Tweet.CreatedBy.UserIdentifier.ScreenName,
                 FullText = args.Tweet.FullText,
                 CreatedAt = args.Tweet.CreatedAt,
@@ -32,16 +34,32 @@ namespace TweetSentimentAnalysis.DataAcessLayer
 
             try
             {
-                var x = await _documentClient.CreateDocumentAsync(_documentCollectionUri,
-                    document);
-
-                var response = x;
+                await _documentClient.CreateDocumentAsync(_documentCollectionUri, document);
             }
-            catch (Exception e)
+            catch (DocumentClientException documentClientException)
             {
-                //TODO: Handle possible HTTP Status Code 429 Too Many Requests and Timeouts!
-                Console.WriteLine(e);
-                Console.ReadKey();
+                if (documentClientException.StatusCode != null)
+                {
+                    var statusCode = (int) documentClientException.StatusCode;
+
+                    // Error 429 ("Request rate is large") indicates that the application has exceeded the provisioned RU quota, and should retry the request after a small time interval.
+                    if (statusCode == 429 || statusCode == (int) HttpStatusCode.ServiceUnavailable)
+                    {
+                        var retryAfterMilliseconds = documentClientException.RetryAfter.Milliseconds;
+                        Console.WriteLine(
+                            $"Status Code: {statusCode}. Retry after: {retryAfterMilliseconds} ms.");
+
+                        Thread.Sleep(retryAfterMilliseconds);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
     }

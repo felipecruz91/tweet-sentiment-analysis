@@ -38,7 +38,7 @@ namespace TweetSentimentAnalysis.BusinessLogic
 
             Console.WriteLine($"[{DateTime.Now}] - Tweet: {tweetSentiment.FullText}. Sentiment: {tweetSentiment.Score}");
 
-            _tweetsRepository.SaveTweetAsync(args, tweetSentiment);
+            await _tweetsRepository.SaveTweetAsync(args, tweetSentiment);
         }
 
 

@@ -5,9 +5,7 @@ namespace TweetSentimentAnalysis.DataAcessLayer
 {
     public class TweetSentimentDocument
     {
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
+        [JsonProperty(PropertyName = "id")] public string Id => $"{PartitionKey}-{CreatedAt.Ticks}-{FullText.GetHashCode()}";
 
         [JsonProperty(PropertyName = "partitionKey")]
         public string PartitionKey { get; set; }

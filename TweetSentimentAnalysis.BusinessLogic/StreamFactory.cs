@@ -24,7 +24,16 @@ namespace TweetSentimentAnalysis.BusinessLogic
                 $"[{DateTime.Now}] - Starting listening for tweets that contains the keyword '{keyword}'...");
 
             _stream.AddTrack(keyword);
-            _stream.MatchingTweetReceived += (sender, args) => { _tweetProcessor.ProcessTweetAsync(keyword, args); };
+            _stream.MatchingTweetReceived += (sender, args) =>
+            {
+                // Exclude RTs
+                if (args.Tweet.IsRetweet)
+                {
+                    return;
+                }
+
+                _tweetProcessor.ProcessTweetAsync(keyword, args);
+            };
             _stream.StartStreamMatchingAllConditions();
         }
     }
