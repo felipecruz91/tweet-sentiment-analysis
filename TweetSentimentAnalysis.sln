@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSentimentAnalysis.Processor", "TweetSentimentAnalysis.Processor\TweetSentimentAnalysis.Processor.csproj", "{55704A48-D5FB-4D9F-BD72-21205BAF1927}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetSentimentAnalysis.Processor", "TweetSentimentAnalysis.Processor\TweetSentimentAnalysis.Processor.csproj", "{55704A48-D5FB-4D9F-BD72-21205BAF1927}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSentimentAnalysis.BusinessLogic", "TweetSentimentAnalysis.BusinessLogic\TweetSentimentAnalysis.BusinessLogic.csproj", "{C97554E3-90AE-4EEC-B63E-F1477285724A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetSentimentAnalysis.BusinessLogic", "TweetSentimentAnalysis.BusinessLogic\TweetSentimentAnalysis.BusinessLogic.csproj", "{C97554E3-90AE-4EEC-B63E-F1477285724A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSentimentAnalysis.DataAcessLayer", "TweetSentimentAnalysis.DataAcessLayer\TweetSentimentAnalysis.DataAcessLayer.csproj", "{6BBA6697-E543-4DC1-B697-F28673635F57}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetSentimentAnalysis.DataAcessLayer", "TweetSentimentAnalysis.DataAcessLayer\TweetSentimentAnalysis.DataAcessLayer.csproj", "{6BBA6697-E543-4DC1-B697-F28673635F57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSentimentAnalysis.Domain", "TweetSentimentAnalysis.Domain\TweetSentimentAnalysis.Domain.csproj", "{74A3E9FA-3720-4BDE-9128-2D55E1D3F48F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TweetSentimentAnalysis.Domain", "TweetSentimentAnalysis.Domain\TweetSentimentAnalysis.Domain.csproj", "{74A3E9FA-3720-4BDE-9128-2D55E1D3F48F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TweetSentimentAnalysis.FunctionApp", "TweetSentimentAnalysis.FunctionApp\TweetSentimentAnalysis.FunctionApp.csproj", "{30E0819E-09B3-46E5-A07F-2880E17D4E33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{74A3E9FA-3720-4BDE-9128-2D55E1D3F48F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74A3E9FA-3720-4BDE-9128-2D55E1D3F48F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74A3E9FA-3720-4BDE-9128-2D55E1D3F48F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30E0819E-09B3-46E5-A07F-2880E17D4E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30E0819E-09B3-46E5-A07F-2880E17D4E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30E0819E-09B3-46E5-A07F-2880E17D4E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30E0819E-09B3-46E5-A07F-2880E17D4E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

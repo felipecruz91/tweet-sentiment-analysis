@@ -7,6 +7,13 @@
  The tweets that are retrieved in *real-time* from the Twitter Stream will be processed and analyzed by the Azure Sentiment Analysis API and persisted in Cosmos DB. 
  Finally, both the tweet text and sentiment will be displayed in the Web App as they come through.
 
+
+## Index
+
+- [Architecture diagram](#architecture-diagram)
+- [Requirements](#requirements)
+- [Steps](#steps)
+
 ## Architecture diagram
 
 ![architecture-diagram](./docs/images/architecture-diagram.PNG)
@@ -44,3 +51,10 @@ You will need the following tools to complete the hands-on lab.
         Collection Id   TweetSentiment
         Partition Key   /partitionKey
         Throughput      400
+
+4. ⚡ Create a Function App that will be used to create the Cosmos Trigger Function afterwards. Make sure you select to create an App Insights resource as part of the creation of the Function App.
+
+    ![create-function-app-step](./docs/images/create-function-app-step.PNG)
+
+    ![create-app-insights-resource](./docs/images/create-app-insights-resource.PNG)
+    
