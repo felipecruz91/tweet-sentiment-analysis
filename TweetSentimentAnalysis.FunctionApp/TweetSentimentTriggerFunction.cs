@@ -6,6 +6,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace TweetSentimentAnalysis.FunctionApp
 {
@@ -50,16 +51,29 @@ namespace TweetSentimentAnalysis.FunctionApp
                     var fullText = document.GetPropertyValue<string>("fullText");
                     var score = document.GetPropertyValue<double>("score");
 
+                    var message = new Message
+                    {
+                        Sender = "TweetSentimentTrigger",
+                        Text = fullText + "Score =>>>> " + score
+                    };
+
                     return signalRMessages.AddAsync(
                         new SignalRMessage
                         {
                             Target = "newMessage",
-                            Arguments = new[] {$"Text: {fullText}. Score: {score}"}
+                            Arguments = new[] {message}
                         });
                 }
             }
 
             return null;
         }
+    }
+
+    public class Message
+    {
+        [JsonProperty("sender")] public string Sender { get; set; }
+
+        [JsonProperty("text")] public string Text { get; set; }
     }
 }
