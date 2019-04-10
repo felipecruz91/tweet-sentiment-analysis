@@ -23,6 +23,7 @@
 You will need the following tools to complete the hands-on lab.
 
 - Visual Studio 2017
+- [Azure Functions Core Tools V2](https://github.com/Azure/azure-functions-core-tools#windows)
 - Docker
 - Azure account
 
@@ -57,4 +58,9 @@ You will need the following tools to complete the hands-on lab.
     ![create-function-app-step](./docs/images/create-function-app-step.PNG)
 
     ![create-app-insights-resource](./docs/images/create-app-insights-resource.PNG)
+
+    Once that the Function App gets created, navigate to `Function App Settings > API > CORS` and check `Enable Access-Control-Allow-Credentials`. 
     
+5. Create an Azure SignalR Service instance. More information [here](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-azure-functions-csharp).
+
+    ![create-signalr-service](./docs/images/create-signalr-service.PNG)
