@@ -37,8 +37,11 @@ namespace TweetSentimentAnalysis.Processor
                 // Start the Twitter Stream
                 var credentials = GetTwitterCredentials();
                 var keys = new TextAnalyticsConfiguration(_configuration);
+
+                int.TryParse(_configuration["Twitter:TweetsPerMinute"], out var tweetsPerMinute);
+
                 var streamFactory =
-                    new StreamFactory(new TweetProcessor(repository, keys, HttpClient), credentials, null);
+                    new StreamFactory(new TweetProcessor(repository, keys, HttpClient), credentials, null, tweetsPerMinute);
                 var keyword = GetKeyword();
                 streamFactory.StartStream(keyword);
             }
