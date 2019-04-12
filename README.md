@@ -27,7 +27,32 @@ You will need the following tools to complete the hands-on lab.
 - Docker
 - Azure account
 
-## Steps
+## Build and push the `TweetSentimentAnalysis.Processor` with Docker
+
+The `TweetSentimentAnalysis.Processor` is a .NET Core App 2.2 that listens to the Twitter Stream for tweets given a `keyword` - you must set it in the `appsettings.json` file or pass it as an environment variable when you *run* the docker image.
+
+### Build and publish the docker image
+
+    λ build-and-push.cmd <your-docker-registry> <docker-img-version>
+
+    Example:
+    λ build-and-push.cmd felipecruz.azurecr.io 0.1.0
+
+### Run the docker image (locally)
+
+    λ docker run -it --rm -e "Keyword=I love coding" twitterfeedprocessor
+
+    [04/12/2019 16:15:12] - Starting program...
+    [04/12/2019 16:15:12] - Environment:
+    [04/12/2019 16:15:12] - Starting listening for tweets that contains the keyword 'I love coding'...
+
+or... 
+
+### Run the docker image (as an Azure Container Instance)
+
+![run-twitterfeedprocessor-as-container-instance](./docs/images/run-twitterfeedprocessor-as-container-instance.PNG)
+
+## Infrastructure setup
 
 1. Create a resource group with name `rg-azure-bootcamp`
 
