@@ -53,7 +53,7 @@ namespace TweetSentimentAnalysis.Processor
 
         private static string GetKeyword()
         {
-            var keyword = Environment.GetEnvironmentVariable("keyword");
+            var keyword = Environment.GetEnvironmentVariable("Keyword");
             if (string.IsNullOrEmpty(keyword))
             {
                 keyword = _configuration["Twitter:Keyword"];
