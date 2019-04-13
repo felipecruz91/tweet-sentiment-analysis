@@ -16,6 +16,9 @@
     },
     "signalRServiceName": {
       "value": "sr-fcz-tweetsentiment"
+    },
+    "acrName": {
+      "value": "felipecruz"
     }
   }
 }

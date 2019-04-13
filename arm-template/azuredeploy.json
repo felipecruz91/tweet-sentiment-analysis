@@ -117,6 +117,33 @@
       "metadata": {
         "description": "The globally unique name of the SignalR resource to create."
       }
+    },
+    "acrName": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 50,
+      "metadata": {
+        "description": "Name of your Azure Container Registry"
+      }
+    },
+    "acrAdminUserEnabled": {
+      "type": "bool",
+      "defaultValue": false,
+      "metadata": {
+        "description": "Enable admin user that have push / pull permission to the registry."
+      }
+    },
+    "acrSku": {
+      "type": "string",
+      "metadata": {
+        "description": "Tier of your Azure Container Registry."
+      },
+      "defaultValue": "Basic",
+      "allowedValues": [
+        "Basic",
+        "Standard",
+        "Premium"
+      ]
     }
   },
   "variables": {
@@ -277,6 +304,24 @@
         "name": "[parameters('pricingTier')]"
       },
       "type": "Microsoft.SignalRService/SignalR"
+    },
+    {
+      "name": "[parameters('acrName')]",
+      "type": "Microsoft.ContainerRegistry/registries",
+      "apiVersion": "2017-10-01",
+      "location": "[parameters('location')]",
+      "comments": "Container registry for storing docker images",
+      "tags": {
+        "displayName": "Container Registry",
+        "container.registry": "[parameters('acrName')]"
+      },
+      "sku": {
+        "name": "[parameters('acrSku')]",
+        "tier": "[parameters('acrSku')]"
+      },
+      "properties": {
+        "adminUserEnabled": "[parameters('acrAdminUserEnabled')]"
+      }
     }
   ],
   "outputs": {
@@ -303,6 +348,10 @@
     "cognitiveServiceEndpoint": {
       "type": "string",
       "value": "[reference(variables('cognitiveservicesid'),'2016-02-01-preview').endpoint]"
+    },
+    "acrLoginServer": {
+      "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('acrName')),'2017-10-01').loginServer]",
+      "type": "string"
     }
   }
 }
