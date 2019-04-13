@@ -6,7 +6,7 @@
 
 ## Deploy
 
-<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fgithub.com%2Ffelipecruz91%2Ftweet-sentiment-analysis%2Ftree%2Fmaster%2Farm-template%2Fazuredeploy.json" target="_blank">
+<a href="https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Ffelipecruz91%2Ftweet-sentiment-analysis%2Fmaster%2Farm-template%2Fazuredeploy.json" target="_blank">
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
