@@ -20,6 +20,14 @@ namespace TweetSentimentAnalysis.DataAcessLayer
         {
             _documentClient = documentClient;
             _documentCollectionUri = UriFactory.CreateDocumentCollectionUri(DatabaseId, CollectionId);
+
+            var dbResourceResponse =
+                _documentClient.CreateDatabaseIfNotExistsAsync(new Database {Id = DatabaseId}).Result;
+
+            var collectionResourceResponse = _documentClient.CreateDocumentCollectionIfNotExistsAsync(
+                UriFactory.CreateDatabaseUri(DatabaseId),
+                new DocumentCollection {Id = CollectionId},
+                new RequestOptions {OfferThroughput = 400});
         }
 
         public async Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, TweetSentiment tweetSentiment)
