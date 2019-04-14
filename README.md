@@ -46,9 +46,11 @@ The following [README](./arm-template/README.md) will guide you through the inst
 
 > **Important**: Before deploying the infrastructure, make sure you set your own resource names in the [parameters file](./arm-template/azuredeploy.parameters.json).
 
-If you have chosen to deploy the resources using the Azure PowerShell module you can easily get the connection strings and keys from the PowerShell window; otherwise, you can download all the info from a zip file with the ![deployment details output results](./docs/images/deployment-results.PNG) a zip file with "deployment.json" and  "deployment_operations.json"
-
+If you have chosen to deploy the resources using the Azure PowerShell module you can easily get the connection strings and keys from the PowerShell window; 
 ![arm-infrastructure-deployment-output](./docs/images/arm-infrastructure-deployment-output.PNG)
+
+Otherwise, you can download all the info from a zip file with the deployment details output files "deployment.json" and  "deployment_operations.json" ![deployment details output results](./docs/images/deployment-results.PNG) 
+![deployment operation results](./docs/images/deployment-operation-results.PNG) 
 
 Next step is to update the file with your keys:
 
