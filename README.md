@@ -26,17 +26,66 @@ You will need the following tools to complete the hands-on lab.
 - [Azure Functions Core Tools V2](https://github.com/Azure/azure-functions-core-tools#windows)
 - Docker
 - Azure account
+- Twitter App. If you don't have one, create one [here](https://developer.twitter.com/en/apps).
+
+## Deploy the infrastructure to Azure
+
+You will be deploying the following resources to Azure using an already defined [ARM template](./arm-template/azuredeploy.json):
+
+- Container registry
+- Azure Cosmos DB
+- Application Insights
+- Function App (Consumption plan)
+- Storage Account
+- SignalR Service
+- Cognitive Services (Sentiment Analysis)
+
+![arm-infrastructure-resources](./docs/images/arm-infrastructure-resources.PNG)
+
+The following [README](./arm-template/README.md) will guide you through the instructions to deploy all the resources aforementioned.
+
+> **Important**: Before deploying the infrastructure, make sure you set your own resource names in the [parameters file](./arm-template/azuredeploy.parameters.json).
+
+If you have chosen to deploy the resources using the Azure PowerShell module you can easily get the connection strings and keys from the PowerShell window; otherwise, you will have to go through every single resource in the portal and find the keys.
+
+![arm-infrastructure-deployment-output](./docs/images/arm-infrastructure-deployment-output.PNG)
+
+Next step is to update the file with your keys:
+
+    {
+        "TextAnalytics": {
+            "Name": "<your-cognitive-service-resource-name>",
+            "Key1": "<cognitivekeys-key1>",
+            "Key2": "<cognitivekeys-key2>"
+        },
+        "CosmosDB": {
+            "EndpointUrl": "<cosmosDbEndpoint>",
+            "AuthorizationKey": "<cosmosDbPrimaryKey>"
+        }
+    }
+
+Once you have done that, make sure you rename the `appsettings.sample.json` file to `appsettings.json`.
 
 ## Build and push the `TweetSentimentAnalysis.Processor` with Docker
 
 The `TweetSentimentAnalysis.Processor` is a .NET Core App 2.2 that listens to the Twitter Stream for tweets given a `keyword` - you must set it in the `appsettings.json` file or pass it as an environment variable when you *run* the docker image.
+
+### Login to your Azure Container Registry
+
+    λ docker login <your-docker-registry> -u <your-user> -p <your-password>
+
+    Example:
+    λ docker login acrfcz.azurecr.io -u myuser -p 1234
+
+    WARNING! Using --password via the CLI is insecure. Use --password-stdin.
+    Login Succeeded
 
 ### Build and publish the docker image
 
     λ build-and-push.cmd <your-docker-registry> <docker-img-version>
 
     Example:
-    λ build-and-push.cmd felipecruz.azurecr.io 0.1.0
+    λ build-and-push.cmd acrfcz.azurecr.io 0.1.0
 
 ### Run the docker image (locally)
 

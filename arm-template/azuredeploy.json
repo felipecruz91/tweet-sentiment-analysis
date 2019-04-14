@@ -128,7 +128,7 @@
     },
     "acrAdminUserEnabled": {
       "type": "bool",
-      "defaultValue": false,
+      "defaultValue": true,
       "metadata": {
         "description": "Enable admin user that have push / pull permission to the registry."
       }
@@ -253,7 +253,7 @@
       "apiVersion": "2018-05-01-preview",
       "name": "[variables('applicationInsightsName')]",
       "type": "microsoft.insights/components",
-      "location": "East US",
+      "location": "[parameters('location')]",
       "tags": {
         "[concat('hidden-link:', resourceGroup().id, '/providers/Microsoft.Web/sites/', variables('applicationInsightsName'))]": "Resource"
       },
@@ -325,9 +325,17 @@
     }
   ],
   "outputs": {
-    "appInsightsInstrumentationKey": {
+    "acrLoginServer": {
+      "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('acrName')),'2017-10-01').loginServer]",
+      "type": "string"
+    },
+    "cognitiveServiceEndpoint": {
       "type": "string",
-      "value": "[reference(variables('appInsightsResourceId'), '2015-05-01').instrumentationKey]"
+      "value": "[reference(variables('cognitiveservicesid'),'2016-02-01-preview').endpoint]"
+    },
+    "cognitivekeys": {
+      "type": "object",
+      "value": "[listKeys(variables('cognitiveservicesid'),'2016-02-01-preview')]"
     },
     "cosmosDbEndpoint": {
       "type": "string",
@@ -341,17 +349,9 @@
       "type": "string",
       "value": "[concat('AccountEndpoint=https://', parameters('databaseAccountName'), '.documents.azure.com:443/;AccountKey=', listKeys(variables('cosmosDBResourceId'), variables('cosmosDBApiVersion')).primaryMasterKey, ';')]"
     },
-    "cognitivekeys": {
-      "type": "object",
-      "value": "[listKeys(variables('cognitiveservicesid'),'2016-02-01-preview')]"
-    },
-    "cognitiveServiceEndpoint": {
+    "appInsightsInstrumentationKey": {
       "type": "string",
-      "value": "[reference(variables('cognitiveservicesid'),'2016-02-01-preview').endpoint]"
-    },
-    "acrLoginServer": {
-      "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('acrName')),'2017-10-01').loginServer]",
-      "type": "string"
+      "value": "[reference(variables('appInsightsResourceId'), '2015-05-01').instrumentationKey]"
     }
   }
 }
