@@ -157,7 +157,8 @@
     "appInsightsResourceId": "[resourceId('microsoft.insights/components/', variables('applicationInsightsName'))]",
     "cognitiveservicesid": "[concat(resourceGroup().id,'/providers/','Microsoft.CognitiveServices/accounts/', parameters('AccountsName'))]",
     "cosmosDBResourceId": "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('databaseAccountName'))]",
-    "cosmosDBApiVersion": "[providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]]"
+    "cosmosDBApiVersion": "[providers('Microsoft.DocumentDB', 'databaseAccounts').apiVersions[0]]",
+    "signalRResourceId": "[concat(resourceGroup().id,'/providers/','Microsoft.SignalRService/SignalR', parameters('signalRServiceName'))]"
   },
   "resources": [
     {
@@ -226,6 +227,14 @@
             {
               "name": "FUNCTIONS_WORKER_RUNTIME",
               "value": "[variables('functionWorkerRuntime')]"
+            },
+            {
+              "name": "CosmosDbConnectionString",
+              "value": "[concat('AccountEndpoint=https://', parameters('databaseAccountName'), '.documents.azure.com:443/;AccountKey=', listKeys(variables('cosmosDBResourceId'), variables('cosmosDBApiVersion')).primaryMasterKey, ';')]"
+            },
+            {
+              "name": "AzureSignalRConnectionString",
+              "value": "[concat('Endpoint=https://', parameters('signalRServiceName'), '.service.signalr.net;AccessKey=', listKeys(parameters('signalRServiceName'), providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]).primaryKey, ';Version=1.0;')]"
             }
           ]
         }
@@ -352,6 +361,10 @@
     "appInsightsInstrumentationKey": {
       "type": "string",
       "value": "[reference(variables('appInsightsResourceId'), '2015-05-01').instrumentationKey]"
+    },
+    "signalRConnectionString": {
+      "type": "string",
+      "value": "[concat('Endpoint=https://', parameters('signalRServiceName'), '.service.signalr.net;AccessKey=', listKeys(parameters('signalRServiceName'), providers('Microsoft.SignalRService', 'SignalR').apiVersions[0]).primaryKey, ';Version=1.0;')]"
     }
   }
 }
