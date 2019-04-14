@@ -53,8 +53,9 @@ namespace TweetSentimentAnalysis.FunctionApp
 
                     var message = new Message
                     {
-                        Sender = "TweetSentimentTrigger",
-                        Text = fullText + "Score =>>>> " + score
+                        Sender = nameof(TweetSentimentTriggerFunction),
+                        Text = fullText,
+                        Score = $"{score}"
                     };
 
                     return signalRMessages.AddAsync(
@@ -75,5 +76,7 @@ namespace TweetSentimentAnalysis.FunctionApp
         [JsonProperty("sender")] public string Sender { get; set; }
 
         [JsonProperty("text")] public string Text { get; set; }
+        [JsonProperty("score")] public string Score { get; set; }
+
     }
 }
