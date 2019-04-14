@@ -7,12 +7,18 @@
  The tweets that are retrieved in *real-time* from the Twitter Stream will be processed and analyzed by the Azure Sentiment Analysis API and persisted in Cosmos DB. 
  Finally, both the tweet text and sentiment will be displayed in the Web App as they come through.
 
+ ![demo](./docs/images/demo.gif)
 
 ## Index
 
 - [Architecture diagram](#architecture-diagram)
 - [Requirements](#requirements)
-- [Steps](#steps)
+- [Deploy the infrastructure to Azure](#Deploy-the-infrastructure-to-Azure)
+- [Build and push the docker image](#Build-and-push-the-docker-image)
+- [Run the docker image (locally)](#Run-the-docker-image-(locally))
+- [Run the docker image (as an Azure Container Instance)](#Run-the-docker-image-(as-an-Azure-Container-Instance))
+- [Deploy the Azure Function](#Deploy-the-Azure-Function)
+- [Host your *servereless* web app in Blob Storage](#Host-your-serverless-web-app-in-Blob-Storage)
 
 ## Architecture diagram
 
@@ -66,7 +72,7 @@ Next step is to update the file with your keys:
 
 Once you have done that, make sure you rename the `appsettings.sample.json` file to `appsettings.json`.
 
-## Build and push the `TweetSentimentAnalysis.Processor` with Docker
+## Build and push the docker image
 
 The `TweetSentimentAnalysis.Processor` is a .NET Core App 2.2 that listens to the Twitter Stream for tweets given a `keyword` - you must set it in the `appsettings.json` file or pass it as an environment variable when you *run* the docker image.
 
@@ -118,7 +124,7 @@ Within Visual Studio, right click on the `TweetSentimentAnalysis.FunctionApp` pr
 
 ![deploy-azure-function-from-vs](./docs/images/deploy-azure-function-from-vs.PNG)
 
-## Host your website in Blob Storage
+## Host your *serverless* web app in Blob Storage
 
 Now it's time to build our *serverless* web app that consists of an index.html in Vue.js and with the SignalR JS libraries to interact with our backend (the Azure Function).
 
@@ -148,3 +154,5 @@ Once you click on it, a pop-up will appear. Enter the Azure Functionapp base URL
 ![webapp-popup](./docs/images/webapp-popup.PNG)
 
 Some tweets should start appearing now :)
+
+![demo](./docs/images/demo.gif)
