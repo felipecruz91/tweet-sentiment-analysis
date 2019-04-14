@@ -24,3 +24,7 @@ Validate the template
 
 Deploy the template
     New-AzResourceGroupDeployment -ResourceGroupName rg-azure-bootcamp -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -v
+
+> It's mandatory use use lower case for the resources names as we can see here bellow
+
+ ![arm-infrastructure-resources](.././docs/images/arm-infrastructure-resources.PNG) 

@@ -58,9 +58,17 @@ If you have chosen to deploy the resources using the Azure PowerShell module you
 Otherwise, you can download all the info from a zip file with the deployment details output files "deployment.json" and  "deployment_operations.json" ![deployment details output results](./docs/images/deployment-results.PNG) 
 ![deployment operation results](./docs/images/deployment-operation-results.PNG) 
 
-Next step is to update the file with your keys:
+Next step is to update the file [appsettings.sample.json](./TweetSentimentAnalysis.Processor/appsettings.sample.json) with your keys:
 
     {
+        "Twitter": {
+            "ConsumerKey": "",
+            "ConsumerSecret": "",
+            "AccessToken": "",
+            "AccessTokenSecret": "",
+            "Keyword": "",
+            "TweetsPerMinute": 3
+        },        
         "TextAnalytics": {
             "Name": "<your-cognitive-service-resource-name>",
             "Key1": "<cognitivekeys-key1>",
@@ -71,6 +79,7 @@ Next step is to update the file with your keys:
             "AuthorizationKey": "<cosmosDbPrimaryKey>"
         }
     }
+In this [link](https://developer.twitter.com/en/docs/basics/apps/guides/the-app-management-dashboard) you can find how to create a Twitter App to get your Key and Token to use Twitter's Api.
 
 Once you have done that, make sure you rename the `appsettings.sample.json` file to `appsettings.json`.
 
