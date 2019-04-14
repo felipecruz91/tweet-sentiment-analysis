@@ -101,40 +101,50 @@ or...
 
 ![run-twitterfeedprocessor-as-container-instance](./docs/images/run-twitterfeedprocessor-as-container-instance.PNG)
 
-## Infrastructure setup
+## Deploy the Azure Function
 
-1. Create a resource group with name `rg-azure-bootcamp`
+Make a copy of the `local.settings.sample.json` file that is present in the `TweetSentimentAnalysis.FunctionApp` folder and rename it to `local.settings.json`. Then update the following values according to the resources you created:
 
-    ![architecture-diagram](./docs/images/create-resource-group-step.PNG)
+    {
+        "IsEncrypted": false,
+        "Values": {
+            "CosmosDbConnectionString": "<cosmosdb-connection-string>",
+            "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+            "AzureSignalRConnectionString": "<signalr-connection-string>"
+        }
+    }
 
-2. Create an Azure Cosmos DB Account under the `rg-azure-bootcamp` resource group that you have created in the previous step.
+Within Visual Studio, right click on the `TweetSentimentAnalysis.FunctionApp` project and select `Publish...`
 
-    ![create-azure-cosmosdb-account](./docs/images/create-azure-cosmosdb-account.PNG)
+![deploy-azure-function-from-vs](./docs/images/deploy-azure-function-from-vs.PNG)
 
-        Resource Group  rg-azure-bootcamp
-        Location        West Europe
-        Account Name    (new) felipecruz-cosmosdb
-        API             Core (SQL)
-        Geo-Redundancy  Disable
-        Multi-region Writes Disable
+## Host your website in Blob Storage
 
-3. Create both a new database and a new collection under the Cosmos DB account you created in the previous step.
+Now it's time to build our *serverless* web app that consists of an index.html in Vue.js and with the SignalR JS libraries to interact with our backend (the Azure Function).
 
-    ![create-cosmos-collection-step](./docs/images/create-cosmos-collection-step.PNG)
+In the storage account, let's create a new blob container with the following configuration:
 
-        Database Id     TweetAnalysis
-        Collection Id   TweetSentiment
-        Partition Key   /partitionKey
-        Throughput      400
+- Name: `$web`
+- Public access level: `Blob (anonymous read access for blobs only)`
 
-4. ⚡ Create a Function App that will be used to create the Cosmos Trigger Function afterwards. Make sure you select to create an App Insights resource as part of the creation of the Function App.
+![create-blob-containter](./docs/images/create-blob-container.PNG)
 
-    ![create-function-app-step](./docs/images/create-function-app-step.PNG)
+This will allow our *serverless* web app to be publicly available instead of private.
 
-    ![create-app-insights-resource](./docs/images/create-app-insights-resource.PNG)
+Then click in the container and just upload the [index.html](./docs/demo/app/index.html) file:
 
-    Once that the Function App gets created, navigate to `Function App Settings > API > CORS` and check `Enable Access-Control-Allow-Credentials`. 
-    
-5. Create an Azure SignalR Service instance. More information [here](https://docs.microsoft.com/en-us/azure/azure-signalr/signalr-quickstart-azure-functions-csharp).
+![upload-index](./docs/images/upload-index.PNG)
 
-    ![create-signalr-service](./docs/images/create-signalr-service.PNG)
+You can find your *serverless* web app URL by clicking on the blob:
+
+![web-app-url](./docs/images/web-app-url.PNG)
+
+Example:
+
+    https://safcztweetsentiment.blob.core.windows.net/$web/index.html
+
+Once you click on it, a pop-up will appear. Enter the Azure Functionapp base URL and press OK.
+
+![webapp-popup](./docs/images/webapp-popup.PNG)
+
+Some tweets should start appearing now :)
