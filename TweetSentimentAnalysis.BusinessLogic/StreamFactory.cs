@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using Tweetinvi;
+using Tweetinvi.Exceptions;
 using Tweetinvi.Models;
+using Tweetinvi.Parameters;
 using Tweetinvi.Streaming;
 
 namespace TweetSentimentAnalysis.BusinessLogic
@@ -16,7 +19,7 @@ namespace TweetSentimentAnalysis.BusinessLogic
         public StreamFactory(ITweetProcessor tweetProcessor, ITwitterCredentials credentials, IFilteredStream stream,
             int? tweetsPerMinute)
         {
-            Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret,
+            var result = Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret,
                 credentials.AccessToken, credentials.AccessTokenSecret);
             _tweetProcessor = tweetProcessor;
             _tweetsPerMinute = tweetsPerMinute;
@@ -27,27 +30,41 @@ namespace TweetSentimentAnalysis.BusinessLogic
         {
             Console.WriteLine(
                 $"[{DateTime.Now}] - Starting listening for tweets that contains the keyword '{keyword}'...");
-
-            _stream.AddTrack(keyword);
-            _stream.MatchingTweetReceived += (sender, args) =>
+            try
             {
-                // Exclude RTs
-                if (args.Tweet.IsRetweet)
+                // Disable the exception swallowing to allow exception to be thrown by Tweetinvi
+                ExceptionHandler.SwallowWebExceptions = false;
+                var authenticatedUser = User.GetAuthenticatedUser(null, new GetAuthenticatedUserParameters());
+
+                if (authenticatedUser != null) // Something went wrong but we don't know what
                 {
-                    return;
+                    _stream.AddTrack(keyword);
+                    _stream.MatchingTweetReceived += (sender, args) =>
+                    {
+                    // Exclude RTs
+                    if (args.Tweet.IsRetweet)
+                        {
+                            return;
+                        }
+
+                        if (_tweetsPerMinute.HasValue && _tweetsPerMinute.Value != default(int))
+                        {
+                            Throttle();
+                        }
+
+                        _tweetProcessor.ProcessTweetAsync(keyword, args);
+
+                        _lastProcessedTime = Environment.TickCount;
+                        Console.WriteLine($"[{DateTime.Now}] - Last processed time {_lastProcessedTime} ms.");
+                    };
+                    _stream.StartStreamMatchingAllConditions();
                 }
-
-                if (_tweetsPerMinute.HasValue && _tweetsPerMinute.Value != default(int))
-                {
-                    Throttle();
-                }
-
-                _tweetProcessor.ProcessTweetAsync(keyword, args);
-
-                _lastProcessedTime = Environment.TickCount;
-                Console.WriteLine($"[{DateTime.Now}] - Last processed time {_lastProcessedTime} ms.");
-            };
-            _stream.StartStreamMatchingAllConditions();
+            }
+            catch (TwitterException ex)
+            {
+                Console.WriteLine($"TwitterException Message : {ex.Message} - description : {ex.TwitterDescription}");
+                throw ex;
+            }
         }
 
         private void Throttle()
