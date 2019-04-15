@@ -19,7 +19,7 @@ namespace TweetSentimentAnalysis.BusinessLogic
         public StreamFactory(ITweetProcessor tweetProcessor, ITwitterCredentials credentials, IFilteredStream stream,
             int? tweetsPerMinute)
         {
-            var result = Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret,
+            Auth.SetUserCredentials(credentials.ConsumerKey, credentials.ConsumerSecret,
                 credentials.AccessToken, credentials.AccessTokenSecret);
             _tweetProcessor = tweetProcessor;
             _tweetsPerMinute = tweetsPerMinute;
