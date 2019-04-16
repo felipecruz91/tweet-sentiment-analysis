@@ -120,7 +120,11 @@ or...
 
 ## Deploy the Azure Function
 
-Make a copy of the `local.settings.sample.json` file that is present in the `TweetSentimentAnalysis.FunctionApp` folder and rename it to `local.settings.json`. Then update the following values according to the resources you created:
+Within Visual Studio, right click on the `TweetSentimentAnalysis.FunctionApp` project and select `Publish...`
+
+![deploy-azure-function-from-vs](./docs/images/deploy-azure-function-from-vs.PNG)
+
+> TIP: If you wanted to debug the Azure Function, make a copy of the `local.settings.sample.json` file that is present in the `TweetSentimentAnalysis.FunctionApp` folder and rename it to `local.settings.json`. Then update the following values according to the resources you created:
 
     {
         "IsEncrypted": false,
@@ -130,10 +134,6 @@ Make a copy of the `local.settings.sample.json` file that is present in the `Twe
             "AzureSignalRConnectionString": "<signalr-connection-string>"
         }
     }
-
-Within Visual Studio, right click on the `TweetSentimentAnalysis.FunctionApp` project and select `Publish...`
-
-![deploy-azure-function-from-vs](./docs/images/deploy-azure-function-from-vs.PNG)
 
 ## Host your *serverless* web app in Blob Storage
 
