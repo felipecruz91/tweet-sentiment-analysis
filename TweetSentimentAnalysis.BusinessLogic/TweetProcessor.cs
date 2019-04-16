@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -84,13 +84,32 @@ namespace TweetSentimentAnalysis.BusinessLogic
             // Deserialize the content string.
             var deserializedContent = JsonConvert.DeserializeObject<ResponseRootObject>(contentString);
 
-            var errors = deserializedContent.Errors;
+            var errors = GetErrorsFromResponse(response, deserializedContent);
+           
             if (errors.Any())
             {
                 errors.ForEach(error => Console.Error.WriteLine($"Error - Id: {error.Id}. Message: {error.Message}"));
             }
 
             return deserializedContent.Documents.FirstOrDefault();
+        }
+
+        private static List<Error> GetErrorsFromResponse(HttpResponseMessage response, ResponseRootObject deserializedContent)
+        {
+            var errors = new List<Error>();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                if (deserializedContent.Error != null)
+                {
+                    errors.Add(deserializedContent.Error);
+                }
+                if (deserializedContent.Errors != null)
+                {
+                    errors.AddRange(deserializedContent.Errors);
+                }
+            }
+            return errors;
         }
     }
 }

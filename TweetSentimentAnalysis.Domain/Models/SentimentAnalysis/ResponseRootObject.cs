@@ -7,5 +7,7 @@ namespace TweetSentimentAnalysis.Domain.Models.SentimentAnalysis
     {
         [JsonProperty("documents")] public List<ResponseDocument> Documents { get; set; }
         [JsonProperty("errors")] public List<Error> Errors { get; set; }
+        [JsonProperty("error")] public Error Error { get; set; }
+
     }
 }
