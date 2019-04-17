@@ -7,10 +7,13 @@
     window.apiBaseUrl = 'http://localhost:7071';
   </script>
   <style>
-    .slide-fade-enter-active, .slide-fade-leave-active {
+    .slide-fade-enter-active,
+    .slide-fade-leave-active {
       transition: all 1s ease;
     }
-    .slide-fade-enter, .slide-fade-leave-to {
+
+    .slide-fade-enter,
+    .slide-fade-leave-to {
       height: 0px;
       overflow-y: hidden;
       opacity: 0;
@@ -32,7 +35,13 @@
         <div>Loading...</div>
       </div>
     </div>
+
     <div v-if="ready">
+      <p> Score avg: {{ scoreAvg }} 
+        <span v-if="scoreAvg >= 0.6">😊</span>
+        <span v-else-if="scoreAvg <= 0.4">😥</span>
+        <span v-else>😐</span>
+      </p>
       <transition-group name="slide-fade" tag="div">
         <div class="row" v-for="message in messages" v-bind:key="message.id">
           <div class="col-sm">
@@ -52,7 +61,7 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
     </transition-group>
   </div>
 
@@ -64,13 +73,14 @@
     const data = {
       newMessage: '',
       messages: [],
-      ready: false
+      ready: false,
+      scoreAvg: 0
     };
 
     const app = new Vue({
       el: '#app',
       data: data,
-      methods: {}
+      methods: { }
     });
 
     const apiBaseUrl = prompt('Enter the Azure Function app base URL', window.apiBaseUrl);
@@ -92,10 +102,25 @@
     function newMessage(message) {
       console.log('new message received!');
       console.log(message);
-       message.id = counter++; // vue transitions need an id
-       data.messages.unshift(message);
-       console.log(data.messages);
+      message.id = counter++; // vue transitions need an id
+      data.messages.unshift(message);
+      console.log(data.messages);
+
+      refreshScoreAverage();
     }
+
+    function refreshScoreAverage() {
+
+      var sum = 0;
+      for (var i = 0; i < data.messages.length; i++) {
+        sum += parseFloat(data.messages[i].score);
+      }
+
+      data.scoreAvg = sum / data.messages.length;
+
+      console.log('Score avg: ' + data.scoreAvg);
+    }
+
   </script>
 </body>
 
