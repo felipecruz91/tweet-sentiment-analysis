@@ -17,7 +17,7 @@
     "signalRServiceName": {
       "value": "sr-fcz-tweetsentiment"
     },
-    "containeRegistryName": {
+    "containerRegistryName": {
       "value": "acrfcz"
     }
   }

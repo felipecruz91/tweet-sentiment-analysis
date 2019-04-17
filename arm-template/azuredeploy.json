@@ -2,30 +2,6 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "functionAppName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the function app that you wish to create."
-      }
-    },
-    "storageAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "The name of the storage account that you wish to create."
-      }
-    },
-    "storageAccountType": {
-      "type": "string",
-      "defaultValue": "Standard_LRS",
-      "allowedValues": [
-        "Standard_LRS",
-        "Standard_GRS",
-        "Standard_RAGRS"
-      ],
-      "metadata": {
-        "description": "Storage Account type"
-      }
-    },
     "location": {
       "type": "string",
       "defaultValue": "[resourceGroup().location]",
@@ -33,92 +9,7 @@
         "description": "Location for all resources."
       }
     },
-    "runtime": {
-      "type": "string",
-      "defaultValue": "dotnet",
-      "allowedValues": [
-        "node",
-        "dotnet",
-        "java"
-      ],
-      "metadata": {
-        "description": "The language worker runtime to load in the function app."
-      }
-    },
-    "apiType": {
-      "type": "string",
-      "metadata": {
-        "description": "The Azure Cosmos DB API type, by default SQL; otherwise one of Cassandra, Gremlin, MongoDB, or Table"
-      },
-      "allowedValues": [
-        "Cassandra",
-        "Gremlin",
-        "MongoDB",
-        "SQL",
-        "Table"
-      ],
-      "defaultValue": "SQL"
-    },
-    "cosmosDbAccountName": {
-      "type": "string",
-      "metadata": {
-        "description": "The Azure Cosmos DB account name."
-      }
-    },
-    "textAnalyticsAccountName": {
-      "metadata": {
-        "description": "Display name of Text Analytics API account"
-      },
-      "type": "string"
-    },
-    "SKU": {
-      "type": "string",
-      "metadata": {
-        "description": "SKU for TextAnalytics API"
-      },
-      "defaultValue": "F0",
-      "allowedValues": [
-        "F0",
-        "S1",
-        "S2",
-        "S3",
-        "S4"
-      ]
-    },
-    "pricingTier": {
-      "type": "string",
-      "defaultValue": "Free_F1",
-      "allowedValues": [
-        "Free_F1",
-        "Standard_S1"
-      ],
-      "metadata": {
-        "description": "The pricing tier of the SignalR resource."
-      }
-    },
-    "capacity": {
-      "type": "int",
-      "defaultValue": 1,
-      "allowedValues": [
-        1,
-        2,
-        5,
-        10,
-        20,
-        50,
-        100
-      ],
-      "metadata": {
-        "description": "The number of SignalR Unit."
-      }
-    },
-    "signalRServiceName": {
-      "type": "string",
-      "metadata": {
-        "description": "The globally unique name of the SignalR resource to create."
-      }
-    },
-    "containeRegistryName": {
+    "containerRegistryName": {
       "type": "string",
       "minLength": 5,
       "maxLength": 50,
@@ -144,7 +35,116 @@
         "Standard",
         "Premium"
       ]
-    }
+    },
+    "functionAppName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the function app that you wish to create."
+      }
+    },
+    "runtime": {
+      "type": "string",
+      "defaultValue": "dotnet",
+      "allowedValues": [
+        "node",
+        "dotnet",
+        "java"
+      ],
+      "metadata": {
+        "description": "The language worker runtime to load in the function app."
+      }
+    },
+    "storageAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "The name of the storage account that you wish to create."
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "allowedValues": [
+        "Standard_LRS",
+        "Standard_GRS",
+        "Standard_RAGRS"
+      ],
+      "metadata": {
+        "description": "Storage Account type"
+      }
+    },
+    "cosmosDbAccountName": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure Cosmos DB account name."
+      }
+    },
+    "apiType": {
+      "type": "string",
+      "metadata": {
+        "description": "The Azure Cosmos DB API type, by default SQL; otherwise one of Cassandra, Gremlin, MongoDB, or Table"
+      },
+      "allowedValues": [
+        "Cassandra",
+        "Gremlin",
+        "MongoDB",
+        "SQL",
+        "Table"
+      ],
+      "defaultValue": "SQL"
+    },
+    "textAnalyticsAccountName": {
+      "metadata": {
+        "description": "Display name of Text Analytics API account"
+      },
+      "type": "string"
+    },
+    "textAnalyticsSKU": {
+      "type": "string",
+      "metadata": {
+        "description": "SKU for TextAnalytics API"
+      },
+      "defaultValue": "F0",
+      "allowedValues": [
+        "F0",
+        "S1",
+        "S2",
+        "S3",
+        "S4"
+      ]
+    },
+    "signalRServiceName": {
+      "type": "string",
+      "metadata": {
+        "description": "The globally unique name of the SignalR resource to create."
+      }
+    },
+    "signalRPricingTier": {
+      "type": "string",
+      "defaultValue": "Free_F1",
+      "allowedValues": [
+        "Free_F1",
+        "Standard_S1"
+      ],
+      "metadata": {
+        "description": "The pricing tier of the SignalR resource."
+      }
+    },
+    "signalRCapacity": {
+      "type": "int",
+      "defaultValue": 1,
+      "allowedValues": [
+        1,
+        2,
+        5,
+        10,
+        20,
+        50,
+        100
+      ],
+      "metadata": {
+        "description": "The number of SignalR Unit."
+      }
+    } 
   },
   "variables": {
     "functionAppName": "[parameters('functionAppName')]",
@@ -293,7 +293,7 @@
     {
       "type": "Microsoft.CognitiveServices/accounts",
       "sku": {
-        "name": "[parameters('SKU')]"
+        "name": "[parameters('textAnalyticsSKU')]"
       },
       "kind": "TextAnalytics",
       "name": "[parameters('textAnalyticsAccountName')]",
@@ -309,20 +309,20 @@
         "hostNamePrefix": "[parameters('signalRServiceName')]"
       },
       "sku": {
-        "capacity": "[parameters('capacity')]",
-        "name": "[parameters('pricingTier')]"
+        "capacity": "[parameters('signalRCapacity')]",
+        "name": "[parameters('signalRPricingTier')]"
       },
       "type": "Microsoft.SignalRService/SignalR"
     },
     {
-      "name": "[parameters('containeRegistryName')]",
+      "name": "[parameters('containerRegistryName')]",
       "type": "Microsoft.ContainerRegistry/registries",
       "apiVersion": "2017-10-01",
       "location": "[parameters('location')]",
       "comments": "Container registry for storing docker images",
       "tags": {
         "displayName": "Container Registry",
-        "container.registry": "[parameters('containeRegistryName')]"
+        "container.registry": "[parameters('containerRegistryName')]"
       },
       "sku": {
         "name": "[parameters('acrSku')]",
@@ -335,7 +335,7 @@
   ],
   "outputs": {
     "acrLoginServer": {
-      "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('containeRegistryName')),'2017-10-01').loginServer]",
+      "value": "[reference(resourceId('Microsoft.ContainerRegistry/registries',parameters('containerRegistryName')),'2017-10-01').loginServer]",
       "type": "string"
     },
     "cognitiveServiceEndpoint": {
