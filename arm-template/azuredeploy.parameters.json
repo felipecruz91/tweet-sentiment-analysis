@@ -2,22 +2,22 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "appName": {
+    "functionAppName": {
       "value": "fa-fcz-tweetsentiment"
     },
     "storageAccountName": {
       "value": "safcztweetsentiment"
     },
-    "databaseAccountName": {
+    "cosmosDbAccountName": {
       "value": "cos-fcz-tweetsentiment"
     },
-    "AccountsName": {
+    "textAnalyticsAccountName": {
       "value": "ta-fcz-tweetsentiment"
     },
     "signalRServiceName": {
       "value": "sr-fcz-tweetsentiment"
     },
-    "acrName": {
+    "containeRegistryName": {
       "value": "acrfcz"
     }
   }
