@@ -18,6 +18,17 @@
       overflow-y: hidden;
       opacity: 0;
     }
+    .bar {
+      background: #17a2b8;
+      height: 100%;
+      transition: width 1s ease;
+      position: relative;
+    }
+    .bar span {
+      position: absolute;
+      right: 0;
+      transform: translate(50%, 250%)
+    }
   </style>
 </head>
 
@@ -37,11 +48,16 @@
     </div>
 
     <div v-if="ready">
-      <p> Score avg: {{ scoreAvg }} 
+      <p style="text-align: center"> Score avg: {{ scoreAvg }}
         <span v-if="scoreAvg >= 0.6">😊</span>
         <span v-else-if="scoreAvg <= 0.4">😥</span>
         <span v-else>😐</span>
       </p>
+      <div style="border: 1px solid #17a2b833; background: #17a2b833; height: 50px; margin-bottom: 40px">
+        <div class="bar" :style="{ width: (scoreAvg * 100) + '%' }">
+          <span>{{(scoreAvg * 100).toFixed(2)}}%</span>
+        </div>
+      </div>
       <transition-group name="slide-fade" tag="div">
         <div class="row" v-for="message in messages" v-bind:key="message.id">
           <div class="col-sm">
