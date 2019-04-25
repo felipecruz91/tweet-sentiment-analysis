@@ -30,14 +30,16 @@ namespace TweetSentimentAnalysis.DataAcessLayer
                 new RequestOptions {OfferThroughput = 400});
         }
 
-        public async Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, TweetSentiment tweetSentiment)
+        public async Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, string keyword,
+            TweetSentiment tweetSentiment)
         {
             var document = new TweetSentimentDocument
             {
                 PartitionKey = args.Tweet.CreatedBy.UserIdentifier.ScreenName,
                 FullText = args.Tweet.FullText,
                 CreatedAt = args.Tweet.CreatedAt,
-                Score = tweetSentiment.Score
+                Score = tweetSentiment.Score,
+                Keyword = keyword
             };
 
             try

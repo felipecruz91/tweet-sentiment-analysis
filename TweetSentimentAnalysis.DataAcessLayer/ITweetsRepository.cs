@@ -6,6 +6,6 @@ namespace TweetSentimentAnalysis.DataAcessLayer
 {
     public interface ITweetsRepository
     {
-        Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, TweetSentiment tweetSentiment);
+        Task SaveTweetAsync(MatchedTweetReceivedEventArgs args, string keyword, TweetSentiment tweetSentiment);
     }
 }

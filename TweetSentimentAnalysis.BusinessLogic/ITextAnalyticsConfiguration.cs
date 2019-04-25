@@ -5,5 +5,6 @@
         string Name { get; }
         string Key1 { get; }
         string Key2 { get; }
+        string Language { get; }
     }
 }

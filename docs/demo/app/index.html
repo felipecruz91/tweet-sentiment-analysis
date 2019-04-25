@@ -18,12 +18,14 @@
       overflow-y: hidden;
       opacity: 0;
     }
+
     .bar {
       background: #17a2b8;
       height: 100%;
       transition: width 1s ease;
       position: relative;
     }
+
     .bar span {
       position: absolute;
       right: 0;
@@ -48,7 +50,10 @@
     </div>
 
     <div v-if="ready">
-      <p style="text-align: center"> Score avg: {{ scoreAvg }}
+      <p style="text-align: center">
+        Keyword: <b>{{ keyword }}</b>
+      </br>
+        Score avg: {{ scoreAvg }}
         <span v-if="scoreAvg >= 0.6">😊</span>
         <span v-else-if="scoreAvg <= 0.4">😥</span>
         <span v-else>😐</span>
@@ -90,13 +95,14 @@
       newMessage: '',
       messages: [],
       ready: false,
-      scoreAvg: 0
+      scoreAvg: 0,
+      keyword: ''
     };
 
     const app = new Vue({
       el: '#app',
       data: data,
-      methods: { }
+      methods: {}
     });
 
     const apiBaseUrl = prompt('Enter the Azure Function app base URL', window.apiBaseUrl);
@@ -121,6 +127,8 @@
       message.id = counter++; // vue transitions need an id
       data.messages.unshift(message);
       console.log(data.messages);
+
+      data.keyword = message.keyword;
 
       refreshScoreAverage();
     }

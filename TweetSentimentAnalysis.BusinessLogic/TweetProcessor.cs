@@ -17,19 +17,21 @@ namespace TweetSentimentAnalysis.BusinessLogic
     {
         private readonly HttpClient _httpClient;
         private readonly ITweetsRepository _tweetsRepository;
+        private readonly ITextAnalyticsConfiguration _configuration;
 
         public TweetProcessor(ITweetsRepository tweetsRepository, ITextAnalyticsConfiguration configuration,
             HttpClient httpClient)
         {
             _tweetsRepository = tweetsRepository;
+            _configuration = configuration;
             _httpClient = httpClient;
             _httpClient.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", $"{configuration.Key1}");
         }
 
-        public async Task ProcessTweetAsync(string track, MatchedTweetReceivedEventArgs args)
+        public async Task ProcessTweetAsync(string keyword, MatchedTweetReceivedEventArgs args)
         {
             var responseDocument = await MakeRequest(args.Tweet.FullText);
-
+            
             var tweetSentiment = new TweetSentiment
             {
                 FullText = args.Tweet.FullText,
@@ -38,7 +40,7 @@ namespace TweetSentimentAnalysis.BusinessLogic
 
             Console.WriteLine($"[{DateTime.Now}] - Tweet: {tweetSentiment.FullText}. Sentiment: {tweetSentiment.Score}");
 
-            await _tweetsRepository.SaveTweetAsync(args, tweetSentiment);
+            await _tweetsRepository.SaveTweetAsync(args, keyword, tweetSentiment);
         }
 
 
@@ -57,7 +59,7 @@ namespace TweetSentimentAnalysis.BusinessLogic
                 {
                     new RequestDocument
                     {
-                        Language = "en",
+                        Language = _configuration.Language ?? "en",
                         Id = "1",
                         Text = tweetFullText
                     }
