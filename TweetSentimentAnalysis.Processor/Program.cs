@@ -69,7 +69,6 @@ namespace TweetSentimentAnalysis.Processor
             return keyword;
         }
 
-
         /// <summary>
         ///     Get the Twitter credentials from environment variables.
         ///     Set up your own credentials at https://apps.twitter.com.

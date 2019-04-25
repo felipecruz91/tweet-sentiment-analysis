@@ -5,6 +5,6 @@ namespace TweetSentimentAnalysis.BusinessLogic
 {
     public interface ITweetProcessor
     {
-        Task ProcessTweetAsync(string track, MatchedTweetReceivedEventArgs args);
+        Task ProcessTweetAsync(string keyword, MatchedTweetReceivedEventArgs args);
     }
 }
