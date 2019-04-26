@@ -103,7 +103,7 @@
       "metadata": {
         "description": "SKU for TextAnalytics API"
       },
-      "defaultValue": "F0",
+      "defaultValue": "S1",
       "allowedValues": [
         "F0",
         "S1",
