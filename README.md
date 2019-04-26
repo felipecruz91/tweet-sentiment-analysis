@@ -62,17 +62,18 @@ Next step is to update the file [appsettings.sample.json](./TweetSentimentAnalys
 
     {
         "Twitter": {
-            "ConsumerKey": "",
-            "ConsumerSecret": "",
-            "AccessToken": "",
-            "AccessTokenSecret": "",
-            "Keyword": "",
+            "ConsumerKey": "<your-consumer-key>",
+            "ConsumerSecret": "<your-consumer-secret>",
+            "AccessToken": "<your-access-token>",
+            "AccessTokenSecret": "<your-access-token-secret>",
+            "Keyword": "<your-keyword-or-hashtag>",
             "TweetsPerMinute": 3
         },        
         "TextAnalytics": {
             "Name": "<your-cognitive-service-resource-name>",
             "Key1": "<cognitivekeys-key1>",
-            "Key2": "<cognitivekeys-key2>"
+            "Key2": "<cognitivekeys-key2>",
+            "Language": "en"
         },
         "CosmosDB": {
             "EndpointUrl": "<cosmosDbEndpoint>",
@@ -129,8 +130,8 @@ Within Visual Studio, right click on the `TweetSentimentAnalysis.FunctionApp` pr
     {
         "IsEncrypted": false,
         "Values": {
-            "CosmosDbConnectionString": "<cosmosdb-connection-string>",
             "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+            "CosmosDbConnectionString": "<cosmosdb-connection-string>",
             "AzureSignalRConnectionString": "<signalr-connection-string>"
         }
     }
