@@ -54,9 +54,6 @@
         Keyword: <b>{{ keyword }}</b>
       </br>
         Score avg: {{ scoreAvg }}
-        <span v-if="scoreAvg >= 0.6">😊</span>
-        <span v-else-if="scoreAvg <= 0.4">😥</span>
-        <span v-else>😐</span>
       </p>
       <div style="border: 1px solid #17a2b833; background: #17a2b833; height: 50px; margin-bottom: 40px">
         <div class="bar" :style="{ width: (scoreAvg * 100) + '%' }">

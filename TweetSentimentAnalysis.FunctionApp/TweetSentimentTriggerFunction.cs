@@ -48,13 +48,14 @@ namespace TweetSentimentAnalysis.FunctionApp
                 {
                     log.LogInformation("Document Id " + document.Id);
 
+                    var screenName = document.GetPropertyValue<string>("partitionKey");
                     var fullText = document.GetPropertyValue<string>("fullText");
                     var score = document.GetPropertyValue<double>("score");
                     var keyword = document.GetPropertyValue<string>("keyword");
 
                     var message = new Message
                     {
-                        Sender = nameof(TweetSentimentTriggerFunction),
+                        Sender = screenName,
                         Text = fullText,
                         Score = $"{score}",
                         Keyword = keyword
