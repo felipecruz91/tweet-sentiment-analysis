@@ -10,20 +10,25 @@
     <img src="http://azuredeploy.net/deploybutton.png"/>
 </a>
 
-or deploy this template using the following commands:
+or deploy this template using the following commands in PowerShell:
 
 Connect to Azure with a browser sign in token:
 
-    Connect-AzAccount
+    PS> Connect-AzAccount
+   
+Select the subscription you want to deploy your resources to:
 
-Validate the template
+    PS> Select-AzSubscription -SubscriptionName 'Azure Pass - Sponsorship'
 
-    Test-AzResourceGroupDeployment -ResourceGroupName rg-azure-bootcamp -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -v
+Validate the template:
+
+    PS> Test-AzResourceGroupDeployment -ResourceGroupName rg-azure-bootcamp -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -v
 
     VERBOSE: 11:43:20 - Template is valid.
 
-Deploy the template
-    New-AzResourceGroupDeployment -ResourceGroupName rg-azure-bootcamp -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -v
+Deploy the template:
+    
+    PS> New-AzResourceGroupDeployment -ResourceGroupName rg-azure-bootcamp -TemplateFile azuredeploy.json -TemplateParameterFile azuredeploy.parameters.json -v
 
 > It's mandatory use use lower case for the resources names as we can see here bellow
 
